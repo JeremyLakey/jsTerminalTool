@@ -1,0 +1,11 @@
+{
+  "name": "display-javascript-testing",
+  "version": "1.0.0",
+  "description": "testing how to quickly change the terminal in javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeremy Lakey",
+  "license": "ISC"
+}
