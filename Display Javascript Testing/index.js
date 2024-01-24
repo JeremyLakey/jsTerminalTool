@@ -2,19 +2,17 @@
 const Terminal = require('./terminal')
 var fs = require('fs');
 
+//process.stdin.setNoDelay(true)
+process.stdin.setRawMode(true)
 
-const term = new Terminal(10)
+const term = new Terminal()
 
 console.log(Terminal.width)
 console.log(Terminal.height)
     
-    
-read = async (stream) => {
-    const chunks = [];
-    for await (const chunk of stream) console.log(chunk)//chunks.push(chunk); 
-    return Buffer.concat(chunks).toString('utf8');
-}
-
-const input = fs.readFile(0, 'utf-8');
-
-console.log(input)
+var tex = ''
+process.stdin.on("data", (b) => {
+    tex = tex + b.toString('utf8')
+    console.clear();
+    console.log(tex);
+})
