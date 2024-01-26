@@ -80,7 +80,7 @@ const update = () => {setTimeout(() => {
         updateScreen = false
     }
     update()
-}, 1)}
+}, 15)}
 
 update()
 
