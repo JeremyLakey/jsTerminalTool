@@ -48,7 +48,7 @@ class TerminalOutput {
 
     // r = row, s = string
     static write(r, s) {
-        if (s.length >= width) {
+        if (s.length >= this.width) {
             throw new Error('Invalid Width')
         }
         this.writeUnsafe(r, s)
@@ -57,7 +57,7 @@ class TerminalOutput {
     // write, but with out a length check
     static writeUnsafe(r, s) {
         let rStart = this.width * r
-        let cs = cache[r]
+        let cs = this.cache[r]
         
         for (let i = 0; i < s.length; i++) {
             if (i < cs.length && s[i] != cs[i]) this.updateCursor(rStart + i, s[i])
@@ -69,13 +69,13 @@ class TerminalOutput {
             }
         }
 
-        cache[r] = s
+        this.cache[r] = s
     }
 
     // Force update row
     // r = row, s = string
     static writeForce(r, s) {
-        cache[r] = s
+        this.cache[r] = s
         process.stdout.cursorTo(i)
         process.stdout.clearLine()
         process.stdout.write(s)

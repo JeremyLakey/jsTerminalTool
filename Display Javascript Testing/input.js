@@ -25,7 +25,7 @@ class TerminalInput {
         process.stdin.on("data", (data) => {         
             let temp = data.toString()
             for (let i = 0; i < this.callbacks.length; i++) {
-                callbacks[i](temp)
+                this.callbacks[i](temp)
             }
         })
     }
