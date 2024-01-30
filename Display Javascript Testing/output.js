@@ -13,9 +13,9 @@ const SAFE_HEIGHT = 24
 
 
 class TerminalOutput {
-    static _ = process.stdout.on('resize', () => Terminal.resize())
-    static width = Terminal.get_width()
-    static height = Terminal.get_height()
+    static _ = process.stdout.on('resize', () => TerminalOutput.resize())
+    static width = TerminalOutput.get_width()
+    static height = TerminalOutput.get_height()
     static cache = []
     static callbacks = []
 
@@ -34,8 +34,8 @@ class TerminalOutput {
     }
 
     static resize = () => {
-        this.width = Terminal.get_width
-        this.height = Terminal.get_height
+        this.width = TerminalOutput.get_width
+        this.height = TerminalOutput.get_height
         
         process.stdout.cursorTo(0)
         process.stdout.clearScreenDown()
