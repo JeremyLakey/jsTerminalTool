@@ -58,9 +58,12 @@ class TerminalOutput {
     static writeUnsafe(r, s) {
         let rStart = this.width * r
         let cs = this.cache[r]
+        if (!cs) {
+            cs = ""
+        }
         
         for (let i = 0; i < s.length; i++) {
-            if (i < cs.length && s[i] != cs[i]) this.updateCursor(rStart + i, s[i])
+            if (i >= cs.length || s[i] != cs[i]) this.updateCursor(rStart + i, s[i])
         }
 
         if (s.length < cs.length) {
@@ -68,6 +71,8 @@ class TerminalOutput {
                 this.updateCursor(rStart + i, ' ')
             }
         }
+
+        this.updateCursor(rStart + this.width, '\n')
 
         this.cache[r] = s
     }

@@ -1,6 +1,6 @@
 {
   "name": "node-terminal-tools",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Tool for input/output for node.js terminals",
   "main": "index.js",
   "scripts": {
