@@ -5,7 +5,8 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
+const { read } = require('fs');
+const readline = require('readline');
 
 /** safe-ish host dimensions when not running in TTY */
 const SAFE_WIDTH  = 80
@@ -21,8 +22,8 @@ class TerminalOutput {
 
     static clear() {
         process.stdout.write("\u001b[2J\u001b[0;0H"); // somewhat clears terminal text before program
-        process.stdout.cursorTo(0)
-        process.stdout.clearScreenDown()
+        readline.cursorTo(process.stdout, 0);
+        readline.clearScreenDown()
     }
 
     static addResizeCallback(c) {
@@ -37,8 +38,7 @@ class TerminalOutput {
         this.width = TerminalOutput.get_width
         this.height = TerminalOutput.get_height
         
-        process.stdout.cursorTo(0)
-        process.stdout.clearScreenDown()
+        this.clear()
 
         this.cache = []
         for (let i = 0; i < this.height; i++) this.cache.push("")
@@ -63,16 +63,14 @@ class TerminalOutput {
         }
         
         for (let i = 0; i < s.length; i++) {
-            if (i >= cs.length || s[i] != cs[i]) this.updateCursor(rStart + i, s[i])
+            if (i >= cs.length || s[i] != cs[i]) this.updateCursor(r, i, s[i])
         }
 
         if (s.length < cs.length) {
             for (let i = s.length; i < cs.length; i++) {
-                this.updateCursor(rStart + i, ' ')
+                this.updateCursor(r, i, ' ')
             }
         }
-
-        this.updateCursor(rStart + this.width, '\n')
 
         this.cache[r] = s
     }
@@ -80,13 +78,19 @@ class TerminalOutput {
     // Force update row
     // r = row, s = string
     static writeForce(r, s) {
-        this.cache[r] = s
-        process.stdout.cursorTo(i)
+        let rStart = this.width * r
+
+        
+        readline.cursorTo(process.stdout, 0, r);
+
         process.stdout.clearLine()
         process.stdout.write(s)
+
+        this.cache[r] = s
     }
 
-    static updateCursor(i, v) {
+    static updateCursor(r, x, v) {
+        readline.cursorTo(process.stdout, x, r);
         process.stdout.write(v)
     }
 

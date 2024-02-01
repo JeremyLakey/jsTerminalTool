@@ -1,6 +1,6 @@
 {
   "name": "node-terminal-tools",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "Tool for input/output for node.js terminals",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "Jeremy Lakey",
   "license": "MIT",
   "dependencies": {
-    "control-sequence-introducer": "^0.0.2"
+    "control-sequence-introducer": "^0.0.2",
+    "readline": "^1.3.0"
   }
 }
